@@ -1,6 +1,9 @@
 FROM python:3-alpine
 
 # Install required system packages
+RUN apk update
+RUN apk add postgresql-dev gcc python3-dev musl-dev
+
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -8,11 +11,7 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN \
- apk add --no-cache postgresql-libs && \
- apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
- python3 -m pip install -r requirements.txt --no-cache-dir && \
- apk --purge del .build-deps
+RUN pip install -r requirements.txt
 
 WORKDIR /app
 
