@@ -1,10 +1,9 @@
 FROM python:3-alpine
 
-# Install required system packages
-RUN apk update
-RUN apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN apt-get update && apt-get install -y \
+    && apt-get -y install libpq-dev gcc \
+    && pip install psycopg2 \ 
     git \
     unzip \
     libgl1 \
